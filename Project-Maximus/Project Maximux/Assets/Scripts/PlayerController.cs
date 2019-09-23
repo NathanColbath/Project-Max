@@ -15,6 +15,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 forwardVec;
     private Vector3 rightVec;
 
+    public GameObject weaponObject;
+
+    private Weapon currentWeapon;
+    public GameObject weaponHolder;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
         playerBody = GetComponent<Rigidbody>();
         cameraPos = Camera.main.gameObject.transform;
+
+        currentWeapon = weaponObject.GetComponent<Weapon>();
+
+
     }
 
     // Update is called once per frame
@@ -46,26 +55,6 @@ public class PlayerController : MonoBehaviour
         moveZ = Input.GetAxisRaw("Vertical");
         Vector3 moveVec = new Vector3(0,0,0);
 
-
-        /*if (Input.GetKey(KeyCode.W))
-        {
-            //playerBody.AddForce(forwardVec * moveSpeed);
-            moveVec += new Vector3(forwardVec.x, 0.0f, forwardVec.z);
-            //playerBody.AddForce(moveVec * moveSpeed);
-
-            
-
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveVec += cameraPos.transform.right;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveVec  += -cameraPos.transform.right;
-        }*/
-
         moveVec = new Vector3(moveX, 0.0f, moveZ);
 
 
@@ -73,11 +62,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void clampPlayer()
+    public void equipWeapon(Weapon toEquip)
     {
-        if(playerBody.velocity.magnitude > maxSpeed)
+        currentWeapon = toEquip;
+    }
+
+    public void attack()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.forward * 5, currentWeapon.reach);
+
+        for(int i = 0; i < hitColliders.Length; i++)
         {
-            //TODO
+            if (hitColliders[i].gameObject.CompareTag("Enemy"))
+            {
+                Enemy enemy = hitColliders[i].gameObject.GetComponent<Enemy>();
+                Heath enemyHeath = hitColliders[i].gameObject.GetComponent<Heath>();
+            }
         }
     }
 }

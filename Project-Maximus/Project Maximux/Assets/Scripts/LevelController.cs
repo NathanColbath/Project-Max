@@ -39,7 +39,7 @@ public class LevelController : MonoBehaviour
 
         int levelIndex = Random.Range(0, levels.Length);
         GameObject level = levels[levelIndex];
-        Vector3 levelSize = level.GetComponent<Collider>().bounds.size;
+        Vector3 levelSize = level.GetComponent<Renderer>().bounds.size;
 
 
         Vector3 offset = new Vector3(direction.x * levelSize.x, direction.y * levelSize.y, direction.z * levelSize.z);
