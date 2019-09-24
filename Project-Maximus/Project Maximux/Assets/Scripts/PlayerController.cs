@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Heath))]
 public class PlayerController : MonoBehaviour
 {
 
