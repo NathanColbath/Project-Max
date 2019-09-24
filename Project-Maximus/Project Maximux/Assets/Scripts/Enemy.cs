@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     private float maxSpeed = 0.5f;
     private GameObject player;
-    private Rigidbody body;
+    //private Rigidbody body;
 
     private enemyStates currentState;
     private Vector3 spawnPosition;
@@ -57,11 +57,11 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         AiAgent = GetComponent<NavMeshAgent>();
-        body = GetComponent<Rigidbody>();
+   
         currentState = enemyStates.idle;
         spawnPosition = transform.position;
 
-        timeBetweenChangingPoints = Random.Range(1, 3);
+        timeBetweenChangingPoints = Random.Range(1, 2);
 
         attackTimer = timeBetweenAttacks;
 
@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
 
     private void attacking()
     {
-        body.velocity = new Vector3(0, 0, 0);
+       
         attackTimer += Time.deltaTime;
 
         if(attackTimer >= timeBetweenAttacks)
@@ -157,7 +157,7 @@ public class Enemy : MonoBehaviour
     {
         if (movingToPoint)
         {
-            if (distanceBetweenVectors(transform.position, idleMovePosition) < .5) {
+            if (distanceBetweenVectors(transform.position, idleMovePosition) < .6) {
                 transform.position = idleMovePosition;
                 countingDownTimer = true;
             }

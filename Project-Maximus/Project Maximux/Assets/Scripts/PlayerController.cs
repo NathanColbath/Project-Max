@@ -57,8 +57,29 @@ public class PlayerController : MonoBehaviour
         moveZ = Input.GetAxisRaw("Vertical");
         Vector3 moveVec = new Vector3(0,0,0);
 
-        moveVec = new Vector3(moveX, 0.0f, moveZ);
+        //moveVec = new Vector3(moveX, 0.0f, moveZ);
 
+        if (Input.GetKey(KeyCode.W))
+        {
+            //playerBody.AddForce(forwardVec * moveSpeed);
+            moveVec += new Vector3(forwardVec.x, 0.0f, forwardVec.z * Vector3.forward.z).normalized;
+            //playerBody.AddForce(moveVec * moveSpeed);
+
+
+
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveVec += cameraPos.transform.right.normalized;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveVec += -cameraPos.transform.right.normalized;
+        }
+
+        Quaternion newRotation = Quaternion.LookRotation(moveVec);
+        //playerBody.rotation = Quaternion.Lerp(playerBody.rotation, Quaternion.Euler(newRotation), 6);
 
         playerBody.velocity = moveVec * moveSpeed;
 
