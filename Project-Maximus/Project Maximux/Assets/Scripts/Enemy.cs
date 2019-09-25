@@ -214,7 +214,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 randomDirection = Random.insideUnitSphere * radius;
         randomDirection += spawnPosition;
-        randomDirection = new Vector3(randomDirection.x, 0,0f, randomDirection.z);
+        
         NavMeshHit hit;
         Vector3 finalPos = Vector3.zero;
         if(NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
