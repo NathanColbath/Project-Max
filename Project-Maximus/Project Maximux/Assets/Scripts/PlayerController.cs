@@ -78,6 +78,11 @@ public class PlayerController : MonoBehaviour
             moveVec += -cameraPos.transform.right.normalized;
         }
 
+        if (Input.GetKey(KeyCode.S))
+        {
+            moveVec += new Vector3(-forwardVec.x, 0.0f, -forwardVec.z * Vector3.forward.z).normalized;
+        }
+
         Quaternion newRotation = Quaternion.LookRotation(moveVec);
         //playerBody.rotation = Quaternion.Lerp(playerBody.rotation, Quaternion.Euler(newRotation), 6);
 

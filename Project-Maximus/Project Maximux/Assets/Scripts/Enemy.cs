@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour
     public float attackRange = 2;
     public float chaseRange = 5;
     public float timeBetweenAttacks = .5f;
+    public float randomMovePositionRadius = 5;
+    public bool isMinnion;
+    public float clippingRange = .5f;
+    public GameObject followTarget;
+
 
     private float maxSpeed = 0.5f;
     private GameObject player;
@@ -55,13 +60,16 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+     
         player = GameObject.FindGameObjectWithTag("Player");
         AiAgent = GetComponent<NavMeshAgent>();
    
         currentState = enemyStates.idle;
         spawnPosition = transform.position;
 
-        timeBetweenChangingPoints = Random.Range(1, 2);
+        //timeBetweenChangingPoints = Random.Range(1, 2);
+
+        timeBetweenChangingPoints = 1;
 
         attackTimer = timeBetweenAttacks;
 
@@ -74,6 +82,11 @@ public class Enemy : MonoBehaviour
     {
 
         updateStates();
+
+        if (isMinnion && followTarget != null)
+        {
+            spawnPosition = followTarget.transform.position;
+        }
 
     }
 
@@ -157,7 +170,7 @@ public class Enemy : MonoBehaviour
     {
         if (movingToPoint)
         {
-            if (distanceBetweenVectors(transform.position, idleMovePosition) < .6) {
+            if (distanceBetweenVectors(transform.position, idleMovePosition) < clippingRange) {
                 transform.position = idleMovePosition;
                 countingDownTimer = true;
             }
@@ -182,7 +195,7 @@ public class Enemy : MonoBehaviour
             idleMovePosition = randomNavmeshLocation(5);
             while (idleMovePosition == Vector3.zero)
             {
-                idleMovePosition = randomNavmeshLocation(5);
+                idleMovePosition = randomNavmeshLocation(randomMovePositionRadius);
             }
 
             
@@ -201,6 +214,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 randomDirection = Random.insideUnitSphere * radius;
         randomDirection += spawnPosition;
+        randomDirection = new Vector3(randomDirection.x, 0,0f, randomDirection.z);
         NavMeshHit hit;
         Vector3 finalPos = Vector3.zero;
         if(NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
