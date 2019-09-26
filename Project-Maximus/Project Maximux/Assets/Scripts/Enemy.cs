@@ -113,13 +113,14 @@ public class Enemy : MonoBehaviour
     private void updateStates()
     {
         float distanceToPlayer  = (player.transform.position - transform.position).magnitude;
-
-        if(distanceToPlayer < chaseRange && distanceToPlayer  > attackRange)
+        //Debug.Log(distanceToPlayer);
+        if (distanceToPlayer < chaseRange && distanceToPlayer  > attackRange)
         {
             currentState = enemyStates.chasing;
 
-        }else if (distanceToPlayer < attackRange)
+        }else if (distanceToPlayer < attackRange + GetComponent<Renderer>().bounds.size.magnitude)
         {
+            
             currentState = enemyStates.attacking;
         }else
         {
@@ -131,6 +132,7 @@ public class Enemy : MonoBehaviour
 
     private void attacking()
     {
+
        
         attackTimer += Time.deltaTime;
 
@@ -151,6 +153,7 @@ public class Enemy : MonoBehaviour
             attackTimer = 0;
         }
 
+       
 
         
 
@@ -163,7 +166,9 @@ public class Enemy : MonoBehaviour
     private void chasing()
     {
         movingToPoint = false;
+        transform.rotation = Quaternion.LookRotation(player.transform.position - transform.position);
         AiAgent.SetDestination(player.transform.position);
+        
     }
 
     private void idle()

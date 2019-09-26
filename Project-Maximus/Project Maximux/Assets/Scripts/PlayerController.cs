@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     private Weapon currentWeapon;
     public GameObject weaponHolder;
 
+    private float lerpSpeed = .25f;
+
+    public Animator animator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +36,7 @@ public class PlayerController : MonoBehaviour
         cameraPos = Camera.main.gameObject.transform;
 
         currentWeapon = weaponObject.GetComponent<Weapon>();
-
+        //animator = GetComponent<Animator>();
 
     }
 
@@ -42,7 +46,16 @@ public class PlayerController : MonoBehaviour
         forwardVec = transform.position - cameraPos.position;
         forwardVec = forwardVec.normalized;
 
-        
+
+        //animator.SetBool("running", true);
+
+        if (checkIfGettingInput())
+        {
+            animator.SetBool("running", true);
+        }else if(!checkIfGettingInput())
+        {
+            animator.SetBool("running", false);
+        }
 
     }
     private void FixedUpdate()
@@ -83,16 +96,65 @@ public class PlayerController : MonoBehaviour
             moveVec += new Vector3(-forwardVec.x, 0.0f, -forwardVec.z * Vector3.forward.z).normalized;
         }
 
-        Quaternion newRotation = Quaternion.LookRotation(moveVec);
-        //playerBody.rotation = Quaternion.Lerp(playerBody.rotation, Quaternion.Euler(newRotation), 6);
+        
+
+        if (checkIfGettingInput())
+        {
+            
+            Quaternion newRotation = Quaternion.LookRotation(moveVec);
+            playerBody.rotation = Quaternion.Lerp(playerBody.rotation,newRotation, lerpSpeed);
+            
+        }
+
+        
+
+
 
         playerBody.velocity = moveVec * moveSpeed;
 
+        
+
     }
+
+    private bool checkIfGettingInput()
+    {
+        if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        {
+            
+            return false;
+            
+        }
+        
+        return true;
+    }
+
+
 
     public void equipWeapon(Weapon toEquip)
     {
         currentWeapon = toEquip;
+    }
+    
+
+    private void getAttackInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray ray = new Ray(pos, Vector3.down);
+            RaycastHit hit;
+
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+
+                playerBody.rotation = Quaternion.LookRotation( hit.point);
+
+
+            }
+
+        }
     }
 
     public void attack()
