@@ -29,17 +29,23 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
 
+    private bool inAttackAnimation;
+
 
     // Start is called before the first frame update
     void Start()
     {
-      
+
 
         playerBody = GetComponent<Rigidbody>();
         cameraPos = Camera.main.gameObject.transform;
 
         currentWeapon = weaponObject.GetComponent<Weapon>();
+
+        
         //animator = GetComponent<Animator>();
+
+        inAttackAnimation = false;
 
     }
 
@@ -52,18 +58,34 @@ public class PlayerController : MonoBehaviour
 
         //animator.SetBool("running", true);
 
-        if (checkIfGettingInput())
+        if (checkIfGettingInput() && !inAttackAnimation)
         {
             animator.SetBool("running", true);
-        }else if(!checkIfGettingInput())
+        } else if (!checkIfGettingInput() || inAttackAnimation)
         {
             animator.SetBool("running", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inAttackAnimation = true;
+            animator.SetTrigger("swing");
+            animator.SetBool("attacking", true);
+            animator.SetBool("running", false);
+        }
+        else
+        {
+            animator.ResetTrigger("swing");
+            animator.SetBool("attacking", false);
         }
 
     }
     private void FixedUpdate()
     {
-        movePlayer();
+        
+            movePlayer();
+        
+        
     }
 
 
@@ -109,14 +131,26 @@ public class PlayerController : MonoBehaviour
             
         }
 
+
+
+
+
+        if (!inAttackAnimation)
+        {
+            playerBody.velocity = moveVec * moveSpeed;
+        }else
+        {
+            playerBody.velocity = Vector3.zero;
+        }
         
 
-
-
-        playerBody.velocity = moveVec * moveSpeed;
-
         
 
+    }
+
+    private void attackInput()
+    {
+        
     }
 
     private bool checkIfGettingInput()
@@ -141,6 +175,7 @@ public class PlayerController : MonoBehaviour
 
     private void getAttackInput()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -162,14 +197,25 @@ public class PlayerController : MonoBehaviour
 
     public void attack()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.forward * 5, currentWeapon.reach);
+
+       
+
+        inAttackAnimation = false;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position + (transform.forward * 2), currentWeapon.reach);
 
         for(int i = 0; i < hitColliders.Length; i++)
         {
+
+            Debug.Log(hitColliders[i].gameObject.tag);
+
             if (hitColliders[i].gameObject.CompareTag("Enemy"))
             {
+                
                 Enemy enemy = hitColliders[i].gameObject.GetComponent<Enemy>();
                 Heath enemyHeath = hitColliders[i].gameObject.GetComponent<Heath>();
+
+                enemyHeath.reduceHeath(currentWeapon.damage);
+                Debug.Log(enemyHeath.getHitPoints());
             }
         }
     }

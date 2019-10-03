@@ -187,7 +187,7 @@ public class Enemy : MonoBehaviour
                 Heath playerHeath = collisions[i].gameObject.GetComponent<Heath>();
 
                 playerHeath.reduceHeath(1);
-                Debug.Log(playerHeath.getHitPoints());
+                //Debug.Log(playerHeath.getHitPoints());
             }
         }
     }
