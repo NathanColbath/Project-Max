@@ -150,7 +150,10 @@ public class Enemy : MonoBehaviour
         Quaternion newRotation = Quaternion.LookRotation(player.transform.position - transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, lerpSpeed);
     }
-
+    
+    
+    //Function used to attak the player and reduce its health below
+    //TODO fix it so that the attack will be on time with the animations
     private void attacking()
     {
 
@@ -188,7 +191,8 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
+    
+    //Function used to set the AiAgent and set its destination to the player
     private void chasing()
     {
         movingToPoint = false;
@@ -197,6 +201,8 @@ public class Enemy : MonoBehaviour
         
     }
 
+    //Function used to idle the enemy and move the 
+    //enemy to random points on the map
     private void idle()
     {
         if (movingToPoint)
