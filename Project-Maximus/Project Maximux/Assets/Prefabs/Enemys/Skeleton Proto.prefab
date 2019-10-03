@@ -25,8 +25,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2.1
-  attackRange: 4
-  chaseRange: 2
+  attackRange: 3
+  chaseRange: 6
   timeBetweenAttacks: 0.5
   randomMovePositionRadius: 5
   isMinnion: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea0703272772fc4883c313472910c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 0
-  maxHitPoints: 0
+  hitPoints: 15
+  maxHitPoints: 15
 --- !u!195 &830608123
 NavMeshAgent:
   m_ObjectHideFlags: 0

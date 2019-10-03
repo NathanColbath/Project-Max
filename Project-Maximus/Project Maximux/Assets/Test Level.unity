@@ -3044,6 +3044,19 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 1569197544}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1133093907
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133093901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6328735, y: 7.642338, z: 1.0386856}
+  m_Center: {x: -0.063425064, y: 3.321169, z: 0.24600947}
 --- !u!1001 &1163117530
 PrefabInstance:
   m_ObjectHideFlags: 0

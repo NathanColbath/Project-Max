@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 5;
     public float attackRange = 2;
     public float chaseRange = 5;
-    public float timeBetweenAttacks = .5f;
+    public float timeBetweenAttacks = 48 * 1.16f;
     public float randomMovePositionRadius = 5;
     public bool isMinnion;
     public float clippingRange = .5f;
@@ -50,6 +50,10 @@ public class Enemy : MonoBehaviour
 
 
 
+
+    private bool stopped;
+
+
    
 
     // Start is called before the first frame update
@@ -64,9 +68,17 @@ public class Enemy : MonoBehaviour
 
         //timeBetweenChangingPoints = Random.Range(1, 2);
 
+      
+        
+
+        
+        
+
         
 
         attackTimer = timeBetweenAttacks;
+
+        
 
         AiAgent.speed = moveSpeed;
         
@@ -76,13 +88,15 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         updateStates();
 
         if (isMinnion && followTarget != null)
         {
             spawnPosition = followTarget.transform.position;
         }
+
+        
 
     }
 
@@ -93,9 +107,11 @@ public class Enemy : MonoBehaviour
         if(currentState == EnemyState.chasing)
         {
             chasing();
+            
         }else if (currentState == EnemyState.attacking)
         {
             attacking();
+
         }
         else if (currentState == EnemyState.idle)
         {
@@ -108,22 +124,24 @@ public class Enemy : MonoBehaviour
 
     private void updateStates()
     {
-        float distanceToPlayer  = distanceBetweenVectors(transform.position , player.transform.position);
-        Debug.Log(player.transform.position);
+        float distanceToPlayer  = distanceBetweenVectors(player.transform.position, transform.position);
+
         if (distanceToPlayer < chaseRange && distanceToPlayer  > attackRange)
         {
             currentState = EnemyState.chasing;
 
         }
-        if (distanceToPlayer < attackRange)
+        if (distanceToPlayer < attackRange && distanceToPlayer < chaseRange)
         {
-            
+            stopped = false;
             currentState = EnemyState.attacking;
-        }else
+        }else if(distanceToPlayer > chaseRange)
         {
             //movingToPoint = true;
             currentState = EnemyState.idle;
         }
+
+        
 
     }
 
@@ -136,34 +154,39 @@ public class Enemy : MonoBehaviour
     private void attacking()
     {
 
+        if (!stopped)
+        {
+            AiAgent.SetDestination(transform.position);
+            stopped = true;
+        }
+
+
         lerpRotation();
         attackTimer += Time.deltaTime;
 
-        if(attackTimer >= timeBetweenAttacks)
+            
+            
+
+           
+        
+    
+    }
+
+    public void attack()
+    {
+        Collider[] collisions = Physics.OverlapSphere(transform.position + (transform.forward), attackRange);
+        for (int i = 0; i < collisions.Length; i++)
         {
-            Collider[] collisions = Physics.OverlapSphere(transform.position + transform.forward * 2, 3);
-            for (int i = 0; i < collisions.Length; i++)
+
+
+            if (collisions[i].gameObject.CompareTag("Player"))
             {
-                if (collisions[i].gameObject.CompareTag("Player"))
-                {
-                    Heath playerHeath = collisions[i].gameObject.GetComponent<Heath>();
+                Heath playerHeath = collisions[i].gameObject.GetComponent<Heath>();
 
-                    playerHeath.reduceHeath(1);
-                    Debug.Log(playerHeath.getHitPoints());
-                }
+                playerHeath.reduceHeath(1);
+                Debug.Log(playerHeath.getHitPoints());
             }
-
-            attackTimer = 0;
         }
-
-        
-
-
-
-
-
-
-        
     }
 
     private void chasing()

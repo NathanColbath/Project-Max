@@ -6,20 +6,24 @@ public class SkeletonEnemyAnimator : MonoBehaviour
 {
     private Enemy enemyComp;
     private Animator animator;
+    private Animation currentAnimation;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyComp = GetComponent<Enemy>();
         animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per framea
     void Update()
     {
-       
 
-        if(enemyComp.getCurrentState() == EnemyState.idle)
+        
+
+
+        if (enemyComp.getCurrentState() == EnemyState.idle)
         {
             animator.SetBool("idle", true);
             animator.SetBool("chasing", false);
