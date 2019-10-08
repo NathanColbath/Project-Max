@@ -7,6 +7,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    public GameObject damageText;
+
     public float moveSpeed = 10;
     private Rigidbody playerBody;
 
@@ -31,11 +33,25 @@ public class PlayerController : MonoBehaviour
 
     private bool inAttackAnimation;
 
+    private GameController controller;
+
+
+    public GameObject deadText;
+    public GameObject deadPanel;
+
+    public bool secondAttack = false;
+
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
 
+        currentHeath = GetComponent<Heath>();
+        currentArmor = GetComponent<Armor>();
+
+        controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController> ();
 
         playerBody = GetComponent<Rigidbody>();
         cameraPos = Camera.main.gameObject.transform;
@@ -47,6 +63,12 @@ public class PlayerController : MonoBehaviour
 
         inAttackAnimation = false;
 
+    }
+
+    void updateDeadUI()
+    {
+
+       
     }
 
     // Update is called once per frame
@@ -66,18 +88,26 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("running", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !inAttackAnimation)
         {
             inAttackAnimation = true;
             animator.SetTrigger("swing");
             animator.SetBool("attacking", true);
             animator.SetBool("running", false);
         }
-        else
+        else if(!inAttackAnimation)
         {
             animator.ResetTrigger("swing");
             animator.SetBool("attacking", false);
+        }else if (inAttackAnimation)
+        {
+            playerBody.velocity = Vector3.zero;
+        }else if(Input.GetKeyDown(KeyCode.Space) && inAttackAnimation)
+        {
+            animator.SetBool("swing2", true);
         }
+
+        updateUI();
 
     }
     private void FixedUpdate()
@@ -86,6 +116,12 @@ public class PlayerController : MonoBehaviour
             movePlayer();
         
         
+    }
+
+    private void updateUI()
+    {
+        controller.setHeathValue(currentHeath.getHitPoints(), currentHeath.maxHitPoints);
+        controller.setArmorValue(currentArmor.armorValue, currentArmor.maxArmorValue);
     }
 
 
@@ -198,9 +234,9 @@ public class PlayerController : MonoBehaviour
     public void attack()
     {
 
-       
 
         inAttackAnimation = false;
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position + (transform.forward * 2), currentWeapon.reach);
 
         for(int i = 0; i < hitColliders.Length; i++)
@@ -213,11 +249,13 @@ public class PlayerController : MonoBehaviour
                 
                 Enemy enemy = hitColliders[i].gameObject.GetComponent<Enemy>();
                 Heath enemyHeath = hitColliders[i].gameObject.GetComponent<Heath>();
-
-                enemyHeath.reduceHeath(currentWeapon.damage);
+                enemy.takeDamage(Mathf.RoundToInt(Random.Range(currentWeapon.damage - 2, currentWeapon.damage + 2 )),false);
+                //enemyHeath.reduceHeath(currentWeapon.damage);
                 Debug.Log(enemyHeath.getHitPoints());
             }
         }
+
+        
     }
 
     public void equipArmor(Armor toEquip)
@@ -227,6 +265,9 @@ public class PlayerController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
+        GameObject dText = Instantiate(damageText, transform.position + new Vector3(Random.Range(-1, 1), 0.0f, Random.Range(-1, 1)), transform.rotation) as GameObject;
+        dText.GetComponent<FloatingText>().currentColor = (new Color(255, 0, 0));
+        dText.GetComponent<FloatingText>().text = "-" + damage.ToString();
         if (!currentArmor.isDestroyed())
         {
             currentArmor.takeDamage(damage);
@@ -234,5 +275,13 @@ public class PlayerController : MonoBehaviour
         else {
             currentHeath.reduceHeath(damage);
         }
+
+        if (currentHeath.isDead())
+        {
+            Destroy(gameObject);
+            controller.GetComponent<DeathMenuShow>().setDead(true);
+        }
+
+        
     }
 }

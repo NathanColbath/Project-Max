@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &290507121562541744
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8136315707380515800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.890599, y: 7.528759, z: 2.0932226}
+  m_Center: {x: -0.19564112, y: 3.2643793, z: 0.12417127}
 --- !u!114 &830608120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,6 +37,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b36bd95a112854d9c7fe41ae5fc1d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageText: {fileID: 8795010514156355141, guid: 5e1cb9182deebeb45bddba3015c47fa0,
+    type: 3}
+  heathBarObject: {fileID: 6874593582214217503, guid: 3fd11498fb8da7f4e9f268842f1f2c6a,
+    type: 3}
+  heathBar: {fileID: 0}
   moveSpeed: 2.1
   attackRange: 3
   chaseRange: 6
@@ -45,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea0703272772fc4883c313472910c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 25
+  hitPoints: 15
   maxHitPoints: 15
 --- !u!195 &830608123
 NavMeshAgent:

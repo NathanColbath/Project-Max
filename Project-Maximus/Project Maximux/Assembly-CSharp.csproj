@@ -87,11 +87,17 @@
     <Compile Include="Assets\Scripts\Enemy\SkeletonEnemyAnimator.cs" />
     <Compile Include="Assets\Scripts\Game Control\Armor.cs" />
     <Compile Include="Assets\Scripts\Game Control\ArmorType.cs" />
+    <Compile Include="Assets\Scripts\Game Control\BarController.cs" />
     <Compile Include="Assets\Scripts\Game Control\CameraCollider.cs" />
     <Compile Include="Assets\Scripts\Game Control\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Game Control\DeathMenuShow.cs" />
+    <Compile Include="Assets\Scripts\Game Control\FloatingText.cs" />
+    <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
     <Compile Include="Assets\Scripts\Game Control\Heath.cs" />
+    <Compile Include="Assets\Scripts\Game Control\LookAtCamera.cs" />
     <Compile Include="Assets\Scripts\Game Control\Weapon.cs" />
     <Compile Include="Assets\Scripts\Level Generation\LevelController.cs" />
+    <Compile Include="Assets\Scripts\Level Generation\LevelCreationTrigger.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <None Include="Assets\RPG Character Animation Pack FREE\Elements\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
     <None Include="Assets\RPG Character Animation Pack FREE\Elements\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

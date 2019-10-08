@@ -10,8 +10,9 @@ public class Enemy : MonoBehaviour
 {
 
 
-
-
+    public GameObject damageText;
+    public GameObject heathBarObject;
+    public GameObject heathBar;
 
     
     public float moveSpeed = 5;
@@ -59,7 +60,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-     
+        heathBar = Instantiate(heathBarObject, transform.position + new Vector3(0.0f, 6, 0.0f), transform.rotation);
         player = GameObject.FindGameObjectWithTag("Player");
         AiAgent = GetComponent<NavMeshAgent>();
    
@@ -88,7 +89,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        heathBar.transform.position = transform.position + new Vector3(0.0f, 6, 0.0f);
+        heathBar.GetComponent<BarController>().setValue(GetComponent<Heath>().hitPoints, GetComponent<Heath>().maxHitPoints);
+
         updateStates();
 
         if (isMinnion && followTarget != null)
@@ -96,6 +100,12 @@ public class Enemy : MonoBehaviour
             spawnPosition = followTarget.transform.position;
         }
 
+
+        if (GetComponent<Heath>().isDead())
+        {
+            Destroy(gameObject);
+            Destroy(heathBar);
+        }
         
 
     }
@@ -184,9 +194,14 @@ public class Enemy : MonoBehaviour
 
             if (collisions[i].gameObject.CompareTag("Player"))
             {
-                Heath playerHeath = collisions[i].gameObject.GetComponent<Heath>();
+                //Heath playerHeath = collisions[i].gameObject.GetComponent<Heath>();
 
-                playerHeath.reduceHeath(1);
+                //playerHeath.reduceHeath(1);
+
+                PlayerController player = collisions[i].GetComponent<PlayerController>();
+
+                player.takeDamage(2);
+
                 //Debug.Log(playerHeath.getHitPoints());
             }
         }
@@ -278,5 +293,19 @@ public class Enemy : MonoBehaviour
     public EnemyState getCurrentState()
     {
         return currentState;
+    }
+
+    public void takeDamage(float damage, bool isCrit)
+    {
+        if (!isCrit)
+        {
+            Heath currentHeath = GetComponent<Heath>();
+            currentHeath.reduceHeath(damage);
+
+            GameObject newText = Instantiate(damageText, transform.position, transform.rotation) as GameObject;
+            newText.GetComponent<FloatingText>().text = "-" + damage.ToString();
+            newText.GetComponent<FloatingText>().currentColor = new Color(255, 255, 255);
+        }
+        
     }
 }

@@ -95,4 +95,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   attackDelay: 0
-  reach: 3
+  reach: 1

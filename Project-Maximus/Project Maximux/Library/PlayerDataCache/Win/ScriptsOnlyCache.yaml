@@ -1,21 +1,39 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - Armor
+    - BarController
     - CameraController
+    - DeathMenuShow
     - Enemy
     - EnemySpawner
+    - FloatingText
+    - GameController
     - Heath
+    - LevelController
+    - LevelCreationTrigger
+    - LookAtCamera
     - PlayerController
     - SkeletonEnemyAnimator
     - Weapon
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
+    UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Test Level.unity:
     - Class: 1
@@ -52,25 +70,57 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 95
       Script: {instanceID: 0}
+    - Class: 102
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 9782}
+    - Class: 114
+      Script: {instanceID: 9882}
+    - Class: 114
+      Script: {instanceID: 9934}
+    - Class: 114
+      Script: {instanceID: 9974}
+    - Class: 114
       Script: {instanceID: 10018}
     - Class: 114
-      Script: {instanceID: 10182}
+      Script: {instanceID: 10158}
     - Class: 114
-      Script: {instanceID: 10204}
+      Script: {instanceID: 10184}
     - Class: 114
-      Script: {instanceID: 10346}
+      Script: {instanceID: 10206}
     - Class: 114
-      Script: {instanceID: 10626}
+      Script: {instanceID: 10258}
     - Class: 114
-      Script: {instanceID: 10894}
+      Script: {instanceID: 10350}
     - Class: 114
-      Script: {instanceID: 11022}
+      Script: {instanceID: 10372}
+    - Class: 114
+      Script: {instanceID: 10418}
+    - Class: 114
+      Script: {instanceID: 10632}
+    - Class: 114
+      Script: {instanceID: 10900}
+    - Class: 114
+      Script: {instanceID: 11028}
+    - Class: 114
+      Script: {instanceID: 11102}
+    - Class: 114
+      Script: {instanceID: 11186}
+    - Class: 114
+      Script: {instanceID: 11276}
+    - Class: 114
+      Script: {instanceID: 11478}
+    - Class: 114
+      Script: {instanceID: 11534}
+    - Class: 114
+      Script: {instanceID: 20506}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 137
       Script: {instanceID: 0}
@@ -83,6 +133,16 @@ ScriptsOnlyBuild:
     - Class: 198
       Script: {instanceID: 0}
     - Class: 199
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
     - Class: 238
       Script: {instanceID: 0}
@@ -246,6 +306,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LookAtCamera
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: RectMask2D
@@ -257,7 +323,7 @@ ScriptsOnlyBuild:
     className: CameraCollider
   - hash:
       serializedVersion: 2
-      Hash: 872b3fb620694040a8ab6eea0b0d3681
+      Hash: 6a0cc7a6432a5bdb59c7aeeadcb28e6b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -285,6 +351,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 97a64a4bacb9bcd86e278c99d5354e1b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FloatingText
   - hash:
       serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
@@ -339,6 +411,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
+  - hash:
+      serializedVersion: 2
+      Hash: 46f1761af867f906b6da7782094c0892
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LevelCreationTrigger
   - hash:
       serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
@@ -431,7 +509,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 1e2eac10f227614301d4e2ef63cb1d38
+      Hash: 69b44d058622dbd09b07f6ea73bba965
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -497,6 +575,12 @@ ScriptsOnlyBuild:
     className: BSPTree
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BarController
+  - hash:
+      serializedVersion: 2
       Hash: ee0cef6caaac8ae485bfa82f000f0f7b
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -519,6 +603,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
     className: BeforeAfterTestCommandState
+  - hash:
+      serializedVersion: 2
+      Hash: fb92e3529170d291db757773bbd961ff
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameController
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -639,6 +729,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: e3ea0b7ad4037b358f975be315d91271
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DeathMenuShow
   platform: 5
   scenePathNames:
   - Assets/Test Level.unity
