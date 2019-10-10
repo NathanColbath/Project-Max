@@ -80,10 +80,19 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.4333505
+      - time: 0.3975296
         functionName: attack
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 5843026158735221210, guid: c6c76c8c1aa9ac044bdf4ca29010adb4,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.746594
+        functionName: resetAnimation
+        data: 
+        objectReferenceParameter: {fileID: 5843026158735221210, guid: c6c76c8c1aa9ac044bdf4ca29010adb4,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -115,7 +124,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.9128065
+        functionName: attack
+        data: 
+        objectReferenceParameter: {fileID: 5843026158735221210, guid: c6c76c8c1aa9ac044bdf4ca29010adb4,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9809264
+        functionName: resetAnimation
+        data: 
+        objectReferenceParameter: {fileID: 5843026158735221210, guid: c6c76c8c1aa9ac044bdf4ca29010adb4,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
 
     public bool secondAttack = false;
 
+    private int attackCount;
+     
+
     
 
 
@@ -62,6 +65,7 @@ public class PlayerController : MonoBehaviour
         //animator = GetComponent<Animator>();
 
         inAttackAnimation = false;
+        attackCount = 0;
 
     }
 
@@ -91,20 +95,26 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !inAttackAnimation)
         {
             inAttackAnimation = true;
-            animator.SetTrigger("swing");
+
+            if (attackCount == 0)
+            {
+                animator.SetTrigger("swing");
+            }
+            else if (attackCount == 1) {
+                animator.SetTrigger("swing2");
+            }
+            
             animator.SetBool("attacking", true);
             animator.SetBool("running", false);
         }
         else if(!inAttackAnimation)
         {
             animator.ResetTrigger("swing");
+            animator.ResetTrigger("swing2");
             animator.SetBool("attacking", false);
         }else if (inAttackAnimation)
         {
             playerBody.velocity = Vector3.zero;
-        }else if(Input.GetKeyDown(KeyCode.Space) && inAttackAnimation)
-        {
-            animator.SetBool("swing2", true);
         }
 
         updateUI();
@@ -112,8 +122,11 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        
+        if (!inAttackAnimation)
+        {
             movePlayer();
+        }
+            
         
         
     }
@@ -209,53 +222,52 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    private void getAttackInput()
-    {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Ray ray = new Ray(pos, Vector3.down);
-            RaycastHit hit;
-
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-
-                playerBody.rotation = Quaternion.LookRotation( hit.point);
-
-
-            }
-
-        }
-    }
+    
 
     public void attack()
     {
-
+        
 
         inAttackAnimation = false;
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position + (transform.forward * 2), currentWeapon.reach);
-
-        for(int i = 0; i < hitColliders.Length; i++)
+        
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-
+            
             Debug.Log(hitColliders[i].gameObject.tag);
 
             if (hitColliders[i].gameObject.CompareTag("Enemy"))
             {
-                
+                GameObject other = hitColliders[i].gameObject;
+        
+                other.GetComponent<Rigidbody>().AddForce((transform.position - other.transform.position).normalized * 16);
+
                 Enemy enemy = hitColliders[i].gameObject.GetComponent<Enemy>();
                 Heath enemyHeath = hitColliders[i].gameObject.GetComponent<Heath>();
-                enemy.takeDamage(Mathf.RoundToInt(Random.Range(currentWeapon.damage - 2, currentWeapon.damage + 2 )),false);
+                if (attackCount == 0)
+                {
+                    enemy.takeDamage(Mathf.RoundToInt(Random.Range(currentWeapon.damage - 2, currentWeapon.damage + 2)), false);
+                }
+                else if (attackCount == 1)
+                {
+                    enemy.takeDamage(Mathf.RoundToInt(Random.Range(currentWeapon.damage - 1, currentWeapon.damage + 5)), false);
+                }
+                
                 //enemyHeath.reduceHeath(currentWeapon.damage);
                 Debug.Log(enemyHeath.getHitPoints());
             }
         }
+        if (attackCount == 0)
+        {
+            attackCount = 1;
+        }
+        else if (attackCount == 1)
+        {
 
-        
+            attackCount = 0;
+        }
+
     }
 
     public void equipArmor(Armor toEquip)
@@ -281,6 +293,14 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
             controller.GetComponent<DeathMenuShow>().setDead(true);
         }
+
+        
+    }
+
+    public void resetAnimation()
+    {
+        animator.SetBool("attacking", false);
+        inAttackAnimation = false;
 
         
     }
